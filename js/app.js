@@ -3,6 +3,10 @@
 
   var cardElement = document.querySelector('.card');
   var addCardBtnElement = document.querySelector('.add__btn');
+  var registerHandlerBtnElement = document.querySelector('.register__btn');
+  var unregisterHandlerBtnElement = document.querySelector('.unregister__btn');
+  var registerHandlerBtnElement2 = document.querySelector('.register__btn2');
+  var unregisterHandlerBtnElement2 = document.querySelector('.unregister__btn2');
   var addCardInputElement = document.querySelector('.add__input');
   var spinnerElement = document.querySelector('.card__spinner');
   var bgSyncTextElement = document.querySelector('.bg-sync__text');
@@ -17,12 +21,67 @@
     fetchGitUserInfo(userInput);
   }
 
+
   //Add card click event
   addCardBtnElement.addEventListener('click', addGitUserCard, false);
 
+  //Add protocol handler event
+  registerHandlerBtnElement.addEventListener('click', () => {
+    navigator.registerProtocolHandler("web+jngl",
+    "https://fabiorocha.github.io/pwa/?profile=%s",
+    "Jungle handler");
+  }, false);
+
+  //Remove protocol handler event
+  unregisterHandlerBtnElement.addEventListener('click', () => {
+    navigator.unregisterProtocolHandler("web+jngl",
+    "https://fabiorocha.github.io/pwa/?profile=%s",
+    "Jngl handler");
+  }, false);
+
+  //Add protocol handler event
+  registerHandlerBtnElement2.addEventListener('click', () => {
+    navigator.registerProtocolHandler("web+github",
+    "https://fabiorocha.github.io/pwa/?profile=%s",
+    "Jungle handler");
+  }, false);
+
+  //Remove protocol handler event
+  unregisterHandlerBtnElement2.addEventListener('click', () => {
+    navigator.unregisterProtocolHandler("web+github",
+    "https://fabiorocha.github.io/pwa/?profile=%s");
+  }, false);
+
+  function registerFRprotocol() {
+    navigator.registerProtocolHandler("web+protocolzero",
+    "https://fabiorocha.github.io/pwa/?profile=%s",
+    "Random handler");
+
+    navigator.registerProtocolHandler("web+protocolone",
+    "https://fabiorocha.github.io/pwa/?profile=%s",
+    "Random handler");
+
+    navigator.registerProtocolHandler("web+protocoltwo",
+    "https://fabiorocha.github.io/pwa/?profile=%s",
+    "Random handler");
+
+    navigator.registerProtocolHandler("web+protocolthree",
+    "https://fabiorocha.github.io/pwa/?profile=%s",
+    "Random handler");
+  }
+
+
   //To get github user data via `Fetch API`
   function fetchGitUserInfo(username, requestFromBGSync) {
-    var name = username || 'gokulkrishh';
+
+    registerFRprotocol();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const passedUserName = urlParams.get('profile') ? urlParams.get('profile').replace("web+github://", "").slice(0, -1) : "";
+
+    console.log(`Protocol username was: ${passedUserName}`)
+
+    var name = username || passedUserName || 'fabiorocha';
     var url = 'https://api.github.com/users/' + name;
 
     spinnerElement.classList.add('show'); //show spinner
