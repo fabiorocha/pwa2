@@ -9,6 +9,10 @@
   "theme_color": "#29434d",
   "protocol_handlers": [
     {
+      "protocol": "mailto",
+      "url": "https://fabiorocha.github.io/pwa2/?mailto=%s"
+    },
+    {
       "protocol": "web+testing",
       "url": "https://fabiorocha.github.io/pwa2/?testing=%s"
     },
